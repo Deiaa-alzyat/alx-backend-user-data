@@ -63,19 +63,14 @@ class Auth:
                 The user
         """
         return None
-
+    
     def session_cookie(self, request=None):
-        """
-            Cookie value
-            Args:
-                request: Get the cookie session
-            Return:
-                Cookie session
+        """_summary_
+
+        Args:
+            request (_type_, optional): _description_. Defaults to None.
         """
         if request is None:
             return None
-
-        session_env = getenv('SESSION_NAME', None)
-        cookie_sess = request.cookies.get(session_env, None)
-
-        return 
+        session_name = os.getenv('SESSION_NAME')
+        return request.cookies.get(session_name)
