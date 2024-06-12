@@ -51,20 +51,18 @@ def login():
     response.set_cookie('session_id', AUTH.create_session(user_email))
     return response
 
-
-@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
 def logout() -> str:
-    """DELETE /sessions, - session_id
-    Find user with requested session ID, if exists, destroy session
-    Redirect user to GET /, if doesnt exists, respond with 403 HTTP
-    status
+    """DELETE /sessions
+    Return:
+        - Redirects to home route.
     """
-    user_cookie = request.cookies.get("session_id", None)
-    user = AUTH.get_user_from_session_id(user_cookie)
-    if user_cookie is None or user is None:
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
         abort(403)
     AUTH.destroy_session(user.id)
-    return redirect('/')
+    return redirect("/")
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
